@@ -10,7 +10,7 @@
   "author": "David Meyer",
   "license": "UNLICENSED",
   "dependencies": {
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "node-hid": "^0.7.7",
     "uinput": "git+https://github.com/timstableford/node-uinput.git"
   }
