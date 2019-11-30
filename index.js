@@ -118,12 +118,12 @@ const vjoyBPrev = {};
 // BEGIN embedded script adapted from ps3.js from JsPie
 
 const buttonMappings = {
-    r1: "tr",
-    r2: "tr2",
-    leftStickButton: "thumbl",
-    rightStickButton: "thumbr",
-    circle: "b",
-    triangle: "x"
+    r1: "a",
+    r2: "b",
+    leftStickButton: "x",
+    rightStickButton: "y",
+    circle: "tl",
+    triangle: "tr"
 };
 
 const keyMappings = {
@@ -187,15 +187,15 @@ for (var shiftButton in shiftMappings) {
 const axisMappings = {
     x: "leftStickX",
     y: "leftStickY",
-    rx: "rightStickX",
-    ry: "rightStickY"
+    z: "rightStickX",
+    rx: "rightStickY"
 };
 
 const axisInvertion = {
     x: 1,
     y: -1,
-    rx: 1,
-    ry: -1
+    z: 1,
+    rx: -1
 };
 
 const axisCenters = {};
@@ -236,11 +236,11 @@ function script() {
     }
 
     if (ps3.l1 && ps3.l2) {
-        vjoyB.tl = 1;
-        vjoyA.z = -ps3.l2Analog;
+        vjoyB.tl2 = 1;
+        vjoyA.ry = -ps3.l2Analog;
     } else {
-        vjoyB.tl = 0;
-        vjoyA.z = ps3.l1Analog - ps3.l2Analog;
+        vjoyB.tl2 = 0;
+        vjoyA.ry = ps3.l1Analog - ps3.l2Analog;
     }
 
     if (!shiftState) {
@@ -382,12 +382,12 @@ async function onPs3Data(data) {
         ps3.l1 = readDigitalButton(data, 3, 2);
         ps3.r1 = readDigitalButton(data, 3, 3);
         ps3.ps = readPsButton(data, 4);
-        ps3.l2Analog = readAnalogButton(data, 18);
-        ps3.r2Analog = readAnalogButton(data, 19);
         ps3.upAnalog = readAnalogButton(data, 14);
         ps3.rightAnalog = readAnalogButton(data, 15);
         ps3.downAnalog = readAnalogButton(data, 16);
         ps3.leftAnalog = readAnalogButton(data, 17);
+        ps3.l2Analog = readAnalogButton(data, 18);
+        ps3.r2Analog = readAnalogButton(data, 19);
         ps3.l1Analog = readAnalogButton(data, 20);
         ps3.r1Analog = readAnalogButton(data, 21);
         ps3.triangleAnalog = readAnalogButton(data, 22);
