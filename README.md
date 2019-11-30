@@ -16,6 +16,25 @@ KERNEL=="hidraw*", ATTRS{busnum}=="1", ATTRS{idVendor}=="054c", ATTRS{idProduct}
 
 This rule will only apply to PS3 controllers.  This is what I had to do on an Arch-based system; for other distros, your mileage may vary.
 
+## Fixing uinput permissions
+
+Outputting events to a virtual `uinput` device requires permissions to `/dev/uinput`.  I want to be a little more careful about this, since more can be done by a bad actor with access to this as opposed to just the PS3 controller devices.
+
+The basic idea is to make a group with permission to `uinput` and add your regular user to this group.  Eventually, however, I would like to have a separate systemd service which runs as a different user with `uinput` access, and then the user application would communicate with the service to transfer events back and forth.  But for now, this will get it working:
+
+1. `sudo groupadd uinput` to create a `uinput` group.
+2. `sudo usermod -a -G uinput "$USER"` to add yourself to that group.
+3. Create the file `/etc/udev/rules.d/99-uinput.rules` with the content:
+    ```
+    SUBSYSTEM=="misc", KERNEL=="uinput", MODE="0660", GROUP="uinput"
+    ```
+4. Create the file `/etc/modules-load.d/uinput.conf` with the content `uinput`.
+5. Reboot.
+6. Verify `ls /dev/uinput -l` looks like:
+    ```
+    crw-rw---- 1 root uinput 10, 223 Nov 30 02:49 /dev/uinput
+    ```
+
 ## Thoughts
 
 I must say, having implemented basically the same thing separately on both Windows and Linux, it was much easier to implement on Linux.  Granted, I already had a working script from my Windows implementation, and I did a lot more rigor with JsPie than I have at this point with ps3pie, but Linux's flexible subsystems made it trivial to add a virtual joystick device, whereas Windows required an entirely separate virtual joystick driver which had to be signed unless you activate "Test Mode".  From the time I started ps3pie, I had a functional MVP in one night.
