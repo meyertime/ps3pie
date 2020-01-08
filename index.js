@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const fs = require("fs");
 const path = require("path");
-const ps3Module = require("./ps3.js");
+const ps3 = require("./ps3.js");
 const uinput = require("./uinput.js");
 const vm = require("vm");
 const _ = require("lodash");
@@ -84,7 +84,7 @@ async function onPs3Data(data) {
 }
 
 async function main() {
-    await ps3Module.setup();
+    await ps3.setup();
 
     await uinput.setup();
 
@@ -94,7 +94,7 @@ async function main() {
     const script = new vm.Script(scriptCode);
     script.runInNewContext(scriptGlobal);
 
-    ps3Module.on("data", onPs3Data);
+    ps3.on("data", onPs3Data);
 }
 
 function mainSync() {
