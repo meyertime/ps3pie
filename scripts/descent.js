@@ -162,6 +162,11 @@ module.exports = {
                         case "four":
                         case "five":
                             defaultWeapon = action;
+                            vulcanState = false;
+                            break;
+
+                        case "two":
+                            vulcanState = true;
                             break;
                     }
                 }
