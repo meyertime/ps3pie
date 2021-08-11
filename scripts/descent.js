@@ -21,7 +21,7 @@ var shiftAction;
 
 const shiftMappings = {
     ps: {
-        cross: [ "ralt", "f1" ],
+        cross: [ "ralt", "f2" ],
         circle: [ "ralt", "f3" ],
         square: "f2",
         triangle: "tab",
