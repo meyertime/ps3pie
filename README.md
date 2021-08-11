@@ -6,7 +6,16 @@ I have another repo, JsPie, which I previously wrote as an alternative on Window
 
 It works by reading `/dev/hidrawX` for the PS3 controller to read the raw updates from the controller.  The data is adapted to a format similar to what was used in JsPie at which point the embedded script, which is a slightly modified version of `ps3.js` from JsPie, performs some transformation.  The output events are then collected and `uinput` is used to create a virtual event device which emulates the joystick and keyboard outputs.
 
-## Fixing hidraw permission
+## Installation
+
+1. The code is currently compatible with Node.js 16.  Install this through your package manager.  Or, if you need to manage multiple versions of Node.js, use [`nvm`](https://github.com/nvm-sh/nvm).
+2. Install `python2` which is needed by the `ioctl` dependency.
+3. Install `ps3pie`: `npm i -g https://github.com/meyertime/ps3pie.git`
+4. Use the following sections to fix a couple permissions issues.
+
+TIP: If using `nvm`, add this to your `~/.bashrc` file to make sure the correct version of Node.js is used: `alias ps3pie='nvm exec --silent 16 -- ps3pie`
+
+### Fixing hidraw permission
 
 Reading `/dev/hidrawX` requires a change to the permissions.  For example, `chmod 666 /dev/hidrawX`.  This change is not permanent, however.  To change the automatic permissions when connecting the PS3 controller, you need a `udev` rule.  For example, create the file `/etc/udev/rules.d/99-ps3.rules` with the content:
 
@@ -16,7 +25,7 @@ KERNEL=="hidraw*", ATTRS{busnum}=="1", ATTRS{idVendor}=="054c", ATTRS{idProduct}
 
 This rule will only apply to PS3 controllers.  This is what I had to do on an Arch-based system; for other distros, your mileage may vary.
 
-## Fixing uinput permissions
+### Fixing uinput permissions
 
 Outputting events to a virtual `uinput` device requires permissions to `/dev/uinput`.  I want to be a little more careful about this, since more can be done by a bad actor with access to this as opposed to just the PS3 controller devices.
 

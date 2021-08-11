@@ -1,5 +1,5 @@
 const ioctl = require("ioctl");
-const UInput = require("uinput");
+const UInput = require("uinput2");
 const _ = require("lodash");
 
 // Poly-fill some missing constants:
@@ -68,8 +68,12 @@ const axes = {
 };
 
 const SETUP_OPTIONS = {
-    EV_KEY: _([_.values(keys), _.values(buttons)]).flatten().map(v => UInput[v]).value(),
-    EV_ABS : _(axes).values().map(v => UInput[v]).value()
+    UI_SET_EVBIT: [
+        UInput.EV_KEY,
+        UInput.EV_ABS,
+    ],
+    UI_SET_KEYBIT: _([_.values(keys), _.values(buttons)]).flatten().map(v => UInput[v]).value(),
+    UI_SET_ABSBIT: _(axes).values().map(v => UInput[v]).value()
 };
 
 const CREATE_OPTIONS = {
@@ -116,7 +120,8 @@ module.exports = {
     },
 
     async keyPress(code) {
-        await uinput.keyEvent(UInput[keys[code]]);
+        await uinput.sendEvent(UInput.EV_KEY, UInput[keys[code]], 1);
+        await uinput.sendEvent(UInput.EV_KEY, UInput[keys[code]], 0);
     },
 
     async keyCombo(codes) {

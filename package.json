@@ -11,8 +11,8 @@
   "license": "GPL-3.0-only",
   "dependencies": {
     "ioctl": "^2.0.2",
-    "lodash": "^4.17.15",
-    "node-hid": "^1.1.0",
-    "uinput": "git+https://github.com/timstableford/node-uinput.git"
+    "lodash": "^4.17.21",
+    "node-hid": "^2.1.1",
+    "uinput2": "^1.0.2"
   }
 }

@@ -1,4 +1,4 @@
-const UInput = require("uinput");
+const UInput = require("uinput2");
 const _ = require("lodash");
 
 // Poly-fill some missing constants:
@@ -8,7 +8,11 @@ UInput.BTN_DPAD_LEFT = 0x222;
 UInput.BTN_DPAD_RIGHT = 0x223;
 
 const SETUP_OPTIONS = {
-    EV_KEY: [
+    UI_SET_EVBIT: [
+        UInput.EV_KEY,
+        UInput.EV_ABS,
+    ],
+    UI_SET_KEYBIT: [
         UInput.BTN_A,
         UInput.BTN_B,
         UInput.BTN_X,
@@ -25,16 +29,16 @@ const SETUP_OPTIONS = {
         UInput.BTN_DPAD_UP,
         UInput.BTN_DPAD_DOWN,
         UInput.BTN_DPAD_LEFT,
-        UInput.BTN_DPAD_RIGHT
+        UInput.BTN_DPAD_RIGHT,
     ],
-    EV_ABS: [
+    UI_SET_ABSBIT: [
         UInput.ABS_X,
         UInput.ABS_Y,
         UInput.ABS_Z,
         UInput.ABS_RX,
         UInput.ABS_RY,
-        UInput.ABS_RZ
-    ]
+        UInput.ABS_RZ,
+    ],
 };
 
 const CREATE_OPTIONS = {
@@ -51,8 +55,8 @@ const CREATE_OPTIONS = {
         UInput.Abs(UInput.ABS_Z, 255),
         UInput.Abs(UInput.ABS_RX, 255),
         UInput.Abs(UInput.ABS_RY, 255),
-        UInput.Abs(UInput.ABS_RZ, 255)
-    ]
+        UInput.Abs(UInput.ABS_RZ, 255),
+    ],
 };
 
 async function sleep(time) {
