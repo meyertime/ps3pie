@@ -50,3 +50,9 @@ In its current state, ps3pie is only really useful for adapting PS3 controller i
   - As a last resort, you can look at modifying a game's configuration files in order to manually set the mappings.  I had to resort to this with Overload.
 - The script should not be embedded in the application code.  Rather, support for specifying a script file to run should be added.  This would also involve setting up the API that would be used for such scripts.
 - The ability to support multiple types of input and output would make this tool more generally useful and along the same lines as FreePIE.  Currently, it only supports PS3 input and virtual joystick and keyboard output.
+
+## Legal
+
+Copyright 2019-2021 David Meyer
+
+GNU General Public License v3.0

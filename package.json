@@ -8,7 +8,7 @@
   },
   "bin": "index.js",
   "author": "David Meyer",
-  "license": "UNLICENSED",
+  "license": "GPL-3.0-only",
   "dependencies": {
     "ioctl": "^2.0.2",
     "lodash": "^4.17.15",
